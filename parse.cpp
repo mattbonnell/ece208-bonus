@@ -60,11 +60,11 @@ struct formula * parse(std::string formula) {
 
     if (orIndex != -1) {
         f->value = "+";
-        f->left = parse(formula.substr(0, orIndex));
+        f->left = parse(formula.substr(0, orIndex - 1));
         f->right = parse(formula.substr(orIndex + 1, formula.npos));
     } else if (andIndex != -1) {
         f->value = ".";
-        f->left = parse(formula.substr(0, andIndex));
+        f->left = parse(formula.substr(0, andIndex - 1));
         f->right = parse(formula.substr(andIndex + 1, formula.npos));
     } else if (isLiteral) {
         f->value = value;
