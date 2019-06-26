@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 
 
 struct formula {
@@ -28,16 +29,19 @@ struct formula * parse(std::string formula) {
     bool isLiteral = false;
 
     while(formulaStream >> value) {
-        if (value == "(") {
-            if (leftBracketIndex == 0) {
-                leftBracketIndex = formulaStream.tellg();
+        if (value.front() == '(') {
+            if (nestLevel == 0 && andIndex != -1) {
+                break;
             }
-            nestLevel++;
+            nestLevel += (int)std::count(value.begin(), value.end(), '(');;
             continue;
         }
-        if (value == ")") {
-            nestLevel--;
+        if (value.back() == ')') {
+            nestLevel -= (int)std::count(value.begin(), value.end(), ')');
             if (nestLevel == 0) {
+                if (formulaStream.eof()) {
+                    return parse(formula.substr(1, formula.length() - 2));
+                }
                 rightBracketIndex = formulaStream.tellg();
             }
             continue;
@@ -54,7 +58,6 @@ struct formula * parse(std::string formula) {
                 break;
             }
         }
-
         isLiteral = true;
 
     }
@@ -72,6 +75,7 @@ struct formula * parse(std::string formula) {
         f->value = value;
         f->left = NULL;
         f->right = NULL;
+    } else {
     }
 
     return f;
@@ -82,7 +86,6 @@ int main() {
 
     std::ifstream ifs("test.txt");
     std::string formula((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
-
     struct formula * f = parse(formula);
 
     return 0;
