@@ -14,16 +14,11 @@ struct formula {
 
 struct formula * parse(std::string formula) {
 
-    std::cout << formula << std::endl;
-
     std::stringstream formulaStream(formula);
 
     std::string value;
 
     int nestLevel = 0;
-
-    int leftBracketIndex = -1;
-    int rightBracketIndex = -1;
     int andIndex = -1;
     int orIndex = -1;
     bool isLiteral = false;
@@ -38,11 +33,8 @@ struct formula * parse(std::string formula) {
         }
         if (value.back() == ')') {
             nestLevel -= (int)std::count(value.begin(), value.end(), ')');
-            if (nestLevel == 0) {
-                if (formulaStream.eof()) {
-                    return parse(formula.substr(1, formula.length() - 2));
-                }
-                rightBracketIndex = formulaStream.tellg();
+            if (nestLevel == 0 && formulaStream.eof()) {
+                return parse(formula.substr(1, formula.length() - 2));
             }
             continue;
         }
@@ -75,7 +67,6 @@ struct formula * parse(std::string formula) {
         f->value = value;
         f->left = NULL;
         f->right = NULL;
-    } else {
     }
 
     return f;
