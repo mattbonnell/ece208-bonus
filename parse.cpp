@@ -23,6 +23,10 @@ struct formula * parse(std::string formula) {
     int orIndex = -1;
     bool isLiteral = false;
 
+    if (formula.front() == '(' && formula.back() == ')') {
+        return parse(formula.substr(1, formula.length() - 2));
+    }
+
     while(formulaStream >> value) {
         if (value.front() == '(') {
             if (nestLevel == 0 && andIndex != -1) {
@@ -49,6 +53,7 @@ struct formula * parse(std::string formula) {
                 orIndex = formulaStream.tellg();
                 break;
             }
+            continue;
         }
         isLiteral = true;
 
