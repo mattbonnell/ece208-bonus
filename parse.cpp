@@ -14,6 +14,8 @@ struct formula {
 
 struct formula * parse(std::string formula) {
 
+    std::cout << formula << std::endl;
+
     std::stringstream formulaStream(formula);
 
     std::string value;
