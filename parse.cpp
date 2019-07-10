@@ -1,7 +1,7 @@
 #include "parse.h"
 
 
-formula * parse(std::string formula) {
+struct formula * parse(std::string formula) {
 
     std::cout << formula << std::endl;
 

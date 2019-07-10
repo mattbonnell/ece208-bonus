@@ -7,4 +7,4 @@
 #include "formula.h"
 
 
-formula * parse(std::string formula);
+struct formula * parse(std::string formula);

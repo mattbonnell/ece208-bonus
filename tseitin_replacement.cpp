@@ -3,7 +3,7 @@
 #include "parse.h"
 
 
-void _perform_tseitin_replacement_recursive(formula * f, std::list<formula *> * sub_formulas) {
+void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct formula *> * sub_formulas) {
     if (f->value == "+" || f->value == ".") {
         _perform_tseitin_replacement_recursive(f->left, sub_formulas);
         _perform_tseitin_replacement_recursive(f->right, sub_formulas);
@@ -11,20 +11,20 @@ void _perform_tseitin_replacement_recursive(formula * f, std::list<formula *> * 
     } else if (f->value != "-") {
         return;
     }
-    formula * sub = new formula;
+    struct formula * sub = new struct formula;
     std::string sub_var = "p" + std::to_string(sub_formulas->size());
     sub->value = "<->";
-    sub->left = new formula;
+    sub->left = new struct formula;
     sub->left->value = sub_var;
     sub->right = f;
     sub_formulas->push_back(sub);
-    f = new formula;
+    f = new struct formula;
     f->value = sub_var;
     return;
 }
 
-std::list<formula *> * perform_tseitin_replacement(formula * f) {
-    std::list<formula *> * sub_formulas = new std::list<formula *>;
+std::list<struct formula *> * perform_tseitin_replacement(struct formula * f) {
+    std::list<struct formula *> * sub_formulas = new std::list<struct formula *>;
     _perform_tseitin_replacement_recursive(f, sub_formulas);
     return sub_formulas;
 
