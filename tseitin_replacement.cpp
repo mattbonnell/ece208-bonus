@@ -1,6 +1,6 @@
 #include "formula.h"
 #include <list>
-#include "parse.cpp"
+#include "parse.h"
 
 
 void _perform_tseitin_replacement_recursive(formula * f, std::list<formula *> * sub_formulas) {
