@@ -2,12 +2,6 @@
 #include <list>
 #include "parse.cpp"
 
-std::list<formula *> * perform_tseitin_replacement(formula * f) {
-    std::list<formula *> * sub_formulas = new std::list<formula *>;
-    _perform_tseitin_replacement_recursive(f, sub_formulas);
-    return sub_formulas;
-
-}
 
 void _perform_tseitin_replacement_recursive(formula * f, std::list<formula *> * sub_formulas) {
     if (f->value == "+" || f->value == ".") {
@@ -27,6 +21,13 @@ void _perform_tseitin_replacement_recursive(formula * f, std::list<formula *> * 
     f = new formula;
     f->value = sub_var;
     return;
+}
+
+std::list<formula *> * perform_tseitin_replacement(formula * f) {
+    std::list<formula *> * sub_formulas = new std::list<formula *>;
+    _perform_tseitin_replacement_recursive(f, sub_formulas);
+    return sub_formulas;
+
 }
 
 int main() {
