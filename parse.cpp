@@ -67,9 +67,19 @@ struct formula * parse(std::string formula) {
         f->left = parse(formula.substr(0, andIndex - 1));
         f->right = parse(formula.substr(andIndex + 1, formula.npos));
     } else if (isLiteral) {
-        f->value = value;
-        f->left = NULL;
-        f->right = NULL;
+        int int_value = std::stoi(value);
+        if (int_value < 0) {
+            f->value = "-";
+            f->left = new struct formula;
+            f->left->value = std::to_string(int_value * -1);
+            f->left->left = NULL;
+            f->left->right = NULL;
+            f->right = NULL;
+        } else {
+            f->value = value;
+            f->left = NULL;
+            f->right = NULL;
+        }
     }
 
     return f;
