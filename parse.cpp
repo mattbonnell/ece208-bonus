@@ -74,3 +74,5 @@ struct formula * parse(std::string formula) {
     return f;
 
 }
+
+int main() {}
