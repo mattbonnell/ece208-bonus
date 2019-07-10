@@ -40,6 +40,7 @@ int main() {
     formula * f = parse(formula_string);
     std::list<formula *> * sub_formulas = perform_tseitin_replacement(f);
     //test point
+    delete f;
     delete sub_formulas;
     return 0;
 }
