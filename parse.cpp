@@ -4,6 +4,7 @@
 #include <sstream>
 #include <iostream>
 #include <algorithm>
+#include "formula.h"
 
 
 struct formula * parse(std::string formula) {
