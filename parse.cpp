@@ -6,12 +6,6 @@
 #include <algorithm>
 
 
-struct formula {
-    std::string value;
-    formula * left;
-    formula * right;
-};
-
 struct formula * parse(std::string formula) {
 
     std::cout << formula << std::endl;
