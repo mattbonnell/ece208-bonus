@@ -1,16 +1,9 @@
 #include <vector>
-#include <string>
 #include <fstream>
 #include <sstream>
 #include <iostream>
 #include <algorithm>
-
-
-struct formula {
-    std::string value;
-    formula * left;
-    formula * right;
-};
+#include "formula.h"
 
 struct formula * parse(std::string formula) {
 
