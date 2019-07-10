@@ -19,6 +19,9 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     sub->right = f;
     sub_formulas->push_back(sub);
     f->value = sub_var;
+    if (f->left) {
+        delete f->left;
+    }
     f->left = NULL;
     f->right = NULL;
     return;
@@ -36,6 +39,7 @@ int main() {
     std::string formula_string((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     formula * f = parse(formula_string);
     std::list<formula *> * sub_formulas = perform_tseitin_replacement(f);
-
+    //test point
+    delete sub_formulas;
     return 0;
 }
