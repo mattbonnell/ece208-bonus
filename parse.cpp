@@ -80,12 +80,3 @@ struct formula * parse(std::string formula) {
     return f;
 
 }
-
-int main() {
-
-    std::ifstream ifs("test.txt");
-    std::string formula((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
-    struct formula * f = parse(formula);
-
-    return 0;
-}
