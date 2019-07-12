@@ -436,9 +436,9 @@ void printTree(struct dataNode* root){
     if (root == NULL) {
         return;
     }
-    cout << "Here0";
+    // cout << "Here0";
     if(ill==0){
-        cout << "Now" << endl;
+        // cout << "Now" << endl;
         ill=1;
         // printTree(root->leftChild);
     
@@ -450,19 +450,19 @@ void printTree(struct dataNode* root){
     //cout << root->leftChild->leftChild->leftChild->value;
 
     if((root->leftChild == NULL) && (root->rightChild == NULL)){
-        cout << "Here1";
+        // cout << "Here1";
         cout << root->value << " ";
         return;
     }
 
     if(root->value == "-"){
-        cout << "Here2";
+        // cout << "Here2";
         cout << root->value << " ";
         printTree(root->leftChild);
     }
 
     else{
-        cout << "Here3";
+        // cout << "Here3";
         printTree(root->leftChild);
         cout << " " << root->value << " ";
         printTree(root->rightChild);
@@ -540,7 +540,7 @@ int main() {
 
 
 
-   cout<<"The linked list is: ";
+   cout<<"The linked list is: " <<endl;
    display(); 
    return 0; 
 } 
