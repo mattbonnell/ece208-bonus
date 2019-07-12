@@ -436,7 +436,7 @@ void printTree(struct dataNode* root){
     if(ill==0){
         cout << "Now" << endl;
         ill=1;
-    printTree(root->leftChild);
+        // printTree(root->leftChild);
     
     }
     cout << root->leftChild->value;
