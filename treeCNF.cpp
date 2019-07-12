@@ -431,7 +431,11 @@ dataNode* NNF(dataNode* F){
 }
 int ill = 0;
 
-void printTree(struct dataNode* root){
+void printTree(struct dataNode* root){  
+
+    if (root == NULL) {
+        return;
+    }
     cout << "Here0";
     if(ill==0){
         cout << "Now" << endl;
