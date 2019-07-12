@@ -457,9 +457,9 @@ void printTree(struct dataNode* root){
 
     else{
         cout << "Here3";
-       // printTree(root->leftChild);
+        printTree(root->leftChild);
         cout << " " << root->value << " ";
-        //printTree(root->rightChild);
+        printTree(root->rightChild);
 
     }
 
