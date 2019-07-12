@@ -439,8 +439,10 @@ void printTree(struct dataNode* root){
         // printTree(root->leftChild);
     
     }
-    cout << root->leftChild->value;
-    cout << root->rightChild->value;
+    // if (root->leftChild && root->rightChild) {
+    //     cout << root->leftChild->value;
+    //     cout << root->rightChild->value;
+    // }
     //cout << root->leftChild->leftChild->leftChild->value;
 
     if((root->leftChild == NULL) && (root->rightChild == NULL)){
