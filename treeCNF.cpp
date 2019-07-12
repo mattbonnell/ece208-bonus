@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<iostream>
 #include<string.h>
+#include "parse.h"
 
 //#include "C:\Users\Jason\Desktop\Summer 2019 - 2B\ECE 208\ExtraCredit\project1\treeCNF.cpp"
 
@@ -517,6 +518,7 @@ int main() {
         newData1->leftChild=newData1s1;
         newData1->rightChild=newData1s4;
     //End of subtree construction for one subtree
+
 
 
     newData1 = NNF(newData1);
