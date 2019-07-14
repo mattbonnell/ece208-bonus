@@ -16,138 +16,33 @@ using namespace std;
 
  */
 
-// struct Node{
-// // Value, pointers to two node children
-// string value;
-// Node* leftChild;
-// Node* rightChild;
-// };
-
-// struct linkedNode{
-//     Node** node; //Pointer to a node
-//     linkedNode* next;
-// };
-
-// int listCount=0;
-// struct linkedNode* head = NULL;
-
-// //struct Node* head = NULL;
-
-// //Phase 1 - Place arbitrary root of subtree into linked list
-// //Phase 2 - Run CNF converter on entire linked list
-// //Phase 3 - Print entire linked list and all nested subtrees
-
-// // linkedList* createList(struct Node* root){
-// //     struct linkedList *treeList = new struct linkedList;
-// //     treeList->head = root;
-// //     treeList->tail = root;
-// //     treeList->nextNode = NULL;
-// //     length=1;
-
-// //     return treeList;
-// // }
-
-// void insertTree(struct Node* newRoot){
-
-//     if(listCount > 0){
-//     cout << "Head Value " <<(*((head)->node))->value << endl;
-//     }
-//     //Phase 1
-//     struct linkedNode* newNodeValue = new struct linkedNode;
-//     newNodeValue->node = &newRoot;
-
-//     cout << "Inserting " << newRoot->value << endl;
-
-
-//     newNodeValue->next = head;
-
-//     head=newNodeValue;
-
-//     if(listCount>0){
-//         cout << "Next node: " << (*((head->next)->node))->value << endl;
-//     }
-//     cout << "Value of Node Inserted is " << (*((head)->node))->value << endl;
-//     listCount++;
-// }
-
-// void displayList(){
-//     struct linkedNode *ptr;
-//     ptr = head;
-//     while(ptr!=NULL){
-//         cout << (*(ptr->node))->value << endl;
-//         //cout << " " << endl;
-//         ptr = ptr->next;
-//     }
-
-// }
-
-// int main (int argc, char *argv[]){
-//    //Create the nodes
-
-//    struct Node* first = new struct Node;
-//    first->value="first";
-//    insertTree((first));
-
-
-//  cout << "Main Head Value " <<(*((head)->node))->value << endl;
-//   // displayList();
-
-//    struct Node test;
-//    cout << "Main Head Value " <<(*((head)->node))->value << endl;
-//    test.value="Test";
-//    cout << "Main Head Value " <<(*((head)->node))->value << endl;
-//    insertTree((&test));
-
-//    displayList();
-   
-// //    struct Node* third = new struct Node;
-// //    third->value="third";
-// //    insertTree((third));
-
-// //    displayList();
-
-// //    struct Node* fourth = new struct Node;
-// //    fourth->value="fourth";
-// //    insertTree((fourth));
-
-// //    displayList();
-
-// //    struct Node* fifth = new struct Node;
-// //    fifth->value="fifth";
-// //    insertTree((fifth));
-
-// //    displayList();
-
-//    return 0;
-
-// }
-
-
-
-
 #include <iostream>
 #include <string.h>
+#include "formula.h"
 using namespace std;
 struct Node;
 
-struct dataNode{
-    string value;
+// struct formula{
+//     string value;
     
-    dataNode* leftChild;
-    dataNode* rightChild;
-};
+//     formula* left;
+//     formula* right;
+// };
 
 struct Node { 
+    // ONLY USE WITH LINKED LIST!
     //string value;
     Node* next;
-    dataNode* value;
-    // Node** leftChild;
-    // Node** rightChild;
+    formula* value;
+    // Node** left;
+    // Node** right;
 }; 
 
 struct Node* head = NULL;   
-void insert(dataNode* newData) { 
-   //struct dataNode* newData = new dataNode;
+void insert(formula* newData) { 
+        // ONLY USE WITH LINKED LIST!
+
+   //struct formula* newData = new formula;
    //newData->value=val;
 
    struct Node* new_node = new Node; 
@@ -156,6 +51,8 @@ void insert(dataNode* newData) {
    head = new_node; 
 } 
 void display() { 
+        // ONLY USE WITH LINKED LIST!
+
    struct Node* ptr;
    ptr = head;
    while (ptr != NULL) { 
@@ -164,36 +61,36 @@ void display() {
    } 
 } 
 
-dataNode* copyTree(dataNode* F){
+formula* copyTree(formula* F){
     //Should make a copy (subtree) given a rootNode
 
     //In order traversal
-    if(F->leftChild == NULL && (F->rightChild == NULL)){
-        struct dataNode *newNode = new struct dataNode;
+    if(F->left == NULL && (F->right == NULL)){
+        struct formula *newNode = new struct formula;
         newNode->value = F->value;
-        newNode->rightChild = NULL;
-        newNode->leftChild = NULL;
+        newNode->right = NULL;
+        newNode->left = NULL;
         return newNode;
     }
 
-    struct dataNode *newNode1 = new struct  dataNode;
+    struct formula *newNode1 = new struct  formula;
 
-    newNode1->leftChild = copyTree(F->leftChild);
+    newNode1->left = copyTree(F->left);
     newNode1->value = F->value;
-    newNode1->rightChild = copyTree(F->rightChild);
+    newNode1->right = copyTree(F->right);
 
    
     return newNode1;
 }
 
 
-dataNode* impHelper(dataNode* F){
+formula* impHelper(formula* F){
 //Recursive simplifier for both implication, and iff, as well as double negation as always
-//Note: Only leaf node will have both leftChild and rightChild as NULL;
+//Note: Only leaf node will have both left and right as NULL;
 
 //I NEED A CASE TO DEAL WITH RECURSIVE CALL ON A NULL NODE IN THIS CODE !!!!!!!!!! MUST IMPLEMENT !!!!!!!
 
-    if(F->leftChild==NULL && F->rightChild == NULL){
+    if(F->left==NULL && F->right == NULL){
         return F;
     }
 
@@ -201,13 +98,13 @@ dataNode* impHelper(dataNode* F){
         //Encoding for implication case
     
         F->value = "+"; //Set value of F to an OR
-        struct dataNode *newLeft = new struct dataNode;
+        struct formula *newLeft = new struct formula;
         newLeft->value = "-"; //Negation Value - if I am correct with the encoding ?????? 
-        newLeft->leftChild = F->leftChild;
-        newLeft->rightChild = NULL;
-        F->leftChild = newLeft; //Set F leftChild to be negation, with everything else following, rightChild is unchanged
-        F->leftChild = impHelper(F->leftChild);
-        F->rightChild = impHelper(F->rightChild);
+        newLeft->left = F->left;
+        newLeft->right = NULL;
+        F->left = newLeft; //Set F left to be negation, with everything else following, right is unchanged
+        F->left = impHelper(F->left);
+        F->right = impHelper(F->right);
     }
 
     if(F->value == "<->"){
@@ -216,58 +113,58 @@ dataNode* impHelper(dataNode* F){
         F->value = "."; //Set value to an AND
         
         //New OR Nodes
-        struct dataNode *newLeft = new struct dataNode;
-        struct dataNode *newRight = new struct dataNode;
+        struct formula *newLeft = new struct formula;
+        struct formula *newRight = new struct formula;
         newLeft->value = "+";
         newRight->value = "+";
 
         //New Negation nodes
-        struct dataNode *leftNeg = new struct dataNode;
-        struct dataNode *rightNeg = new struct dataNode;
+        struct formula *leftNeg = new struct formula;
+        struct formula *rightNeg = new struct formula;
         leftNeg->value = "-";
         rightNeg->value = "-";
 
         //Assign negation children
-        leftNeg->leftChild = F->leftChild;
-        leftNeg->rightChild = NULL;
-        rightNeg->leftChild = F->rightChild;
-        rightNeg->rightChild = NULL;
+        leftNeg->left = F->left;
+        leftNeg->right = NULL;
+        rightNeg->left = F->right;
+        rightNeg->right = NULL;
 
         //Assign ORs connected with new negations
-        newLeft->leftChild = leftNeg;
-        newLeft->rightChild = F->rightChild;
-        newRight->leftChild = rightNeg;
-        newRight->rightChild = F->leftChild;
+        newLeft->left = leftNeg;
+        newLeft->right = F->right;
+        newRight->left = rightNeg;
+        newRight->right = F->left;
 
         //Assign parent node to new ORs
-        F->leftChild = newLeft;
-        F->rightChild = newRight;
+        F->left = newLeft;
+        F->right = newRight;
 
         //Recursive simplification on children
-        F->leftChild = impHelper(F->leftChild);
-        F->rightChild = impHelper(F->rightChild);
+        F->left = impHelper(F->left);
+        F->right = impHelper(F->right);
     }
 
     if(F->value == "."){
         //Encoding for AND case
 
-        F->rightChild = impHelper(F->rightChild);
-        F->leftChild = impHelper(F->leftChild);
+        F->right = impHelper(F->right);
+        F->left = impHelper(F->left);
     }
 
     if(F->value == "+"){
         //Encoding for OR case
 
-        F->rightChild = impHelper(F->rightChild);
-        F->leftChild = impHelper(F->leftChild);
+        F->right = impHelper(F->right);
+        F->left = impHelper(F->left);
     }
 
     //Now need case for double negation, and a separate case for negation yet not a double negation
-    if(F->value == "-" && (F->leftChild->value == "-")){
+    if(F->value == "-" && (F->left->value == "-")){
         //Encoding for double negation
-        struct dataNode *point = new struct dataNode;
-        point = F->leftChild->leftChild; //Point to the first non-negation value
-        delete(F->leftChild);
+        struct formula *point = new struct formula;
+        point = F->left->left; //Point to the first non-negation value
+        delete(F->left);
         
         //Not sure about this!!! - Check
         F = point;
@@ -275,67 +172,67 @@ dataNode* impHelper(dataNode* F){
         F = impHelper(F);
     }
 
-    if(F->value == "-" && (F->leftChild->value != "-")){
+    if(F->value == "-" && (F->left->value != "-")){
         //Encoding for single negation
 
-        F->leftChild = impHelper(F->leftChild);
+        F->left = impHelper(F->left);
     }
 
     return F;
 }
 
-dataNode* negHelper(dataNode* F){
+formula* negHelper(formula* F){
 //Will be called, always, after simplification of imps and bidirectional imps, so apply DeMorgans Laws now
 
-    if(F->leftChild==NULL && F->rightChild == NULL){
+    if(F->left==NULL && F->right == NULL){
     //Encoding of a Leaf
     return F;
     }
 
-    if(F->value == "-" && (F->leftChild->value == ".")){
+    if(F->value == "-" && (F->left->value == ".")){
         //Encoding for negation around an AND clause
         
         F->value = "+";
-        struct dataNode *leftNeg = new struct dataNode;
-        struct dataNode *rightNeg = new struct dataNode;
+        struct formula *leftNeg = new struct formula;
+        struct formula *rightNeg = new struct formula;
 
-        leftNeg->leftChild = F->leftChild->leftChild;
-        leftNeg->rightChild = NULL; //Since neg node
-        rightNeg->rightChild = NULL;
-        rightNeg->leftChild = F->leftChild->rightChild;
+        leftNeg->left = F->left->left;
+        leftNeg->right = NULL; //Since neg node
+        rightNeg->right = NULL;
+        rightNeg->left = F->left->right;
 
-        F->leftChild = leftNeg;
-        F->rightChild = rightNeg;
+        F->left = leftNeg;
+        F->right = rightNeg;
 
-        F->leftChild = negHelper(F->leftChild);
-        F->rightChild = negHelper(F->rightChild);
+        F->left = negHelper(F->left);
+        F->right = negHelper(F->right);
     }
 
-    if (F->value == "-" && (F->leftChild->value == "+")){
+    if (F->value == "-" && (F->left->value == "+")){
         //Encoding for negation around an ORed clause
 
         F->value = ".";
-        struct dataNode *leftNeg = new struct dataNode;
-        struct dataNode *rightNeg = new struct dataNode;
+        struct formula *leftNeg = new struct formula;
+        struct formula *rightNeg = new struct formula;
 
-        leftNeg->leftChild = F->leftChild->leftChild;
-        rightNeg->leftChild = F->leftChild->rightChild;
-        leftNeg->rightChild = NULL;
-        rightNeg->rightChild = NULL;
+        leftNeg->left = F->left->left;
+        rightNeg->left = F->left->right;
+        leftNeg->right = NULL;
+        rightNeg->right = NULL;
 
-        F->leftChild = leftNeg;
-        F->rightChild = rightNeg;
+        F->left = leftNeg;
+        F->right = rightNeg;
 
-        F->leftChild = negHelper(F->leftChild);
-        F->rightChild = negHelper(F->rightChild);
+        F->left = negHelper(F->left);
+        F->right = negHelper(F->right);
     }
 
-    if(F->value == "-" && (F->leftChild->value == "-")){
+    if(F->value == "-" && (F->left->value == "-")){
         //Encoding for double negation
 
-        struct dataNode *point = new struct dataNode;
-        point = F->leftChild->leftChild; //Point to the first non-negation value
-        delete(F->leftChild);
+        struct formula *point = new struct formula;
+        point = F->left->left; //Point to the first non-negation value
+        delete(F->left);
         
         //Not sure about this!!! - Check
         F = point;
@@ -343,74 +240,74 @@ dataNode* negHelper(dataNode* F){
         F = negHelper(F);
     }
 
-    if(F->value == "-" && (F->leftChild->value != "-")){
-        F->leftChild = negHelper(F->leftChild);
+    if(F->value == "-" && (F->left->value != "-")){
+        F->left = negHelper(F->left);
     }
 
     if(F->value == "." || F->value == "+"){
         //End case for all else which is AND or OR alone
 
-        F->leftChild = negHelper(F->leftChild);
-        F->rightChild = negHelper(F->rightChild);
+        F->left = negHelper(F->left);
+        F->right = negHelper(F->right);
     }
 
     return F;
 }
 
-dataNode* CNF(dataNode* F){
+formula* CNF(formula* F){
     //Should apply distribution of disjunctions over conjunctions
 
-    if(F->leftChild == NULL && (F->rightChild == NULL)){
+    if(F->left == NULL && (F->right == NULL)){
         return F; //Reached a leaf node
     }
 
-    if(F->value == "+" && (F->leftChild->value == ".")){
+    if(F->value == "+" && (F->left->value == ".")){
         //Case of distribution detected on left first
 
         F->value == ".";
         
         //Create new AND nodes
-        struct dataNode *newLeft = new struct dataNode;
-        struct dataNode *newRight = new struct dataNode;
+        struct formula *newLeft = new struct formula;
+        struct formula *newRight = new struct formula;
 
-        newLeft->leftChild = F->leftChild->leftChild;
-        newLeft->rightChild = F->rightChild;
+        newLeft->left = F->left->left;
+        newLeft->right = F->right;
         newLeft->value = "+";
         newRight->value = "+";
 
-        newRight->leftChild = F->leftChild->rightChild;
-        newRight->rightChild = F->rightChild; //ISNT;T THERE ISSUE HERE AS NOT REPEATING THE CHILDREN BUT POINTING TO SAME RESOURCES
+        newRight->left = F->left->right;
+        newRight->right = F->right; //ISNT;T THERE ISSUE HERE AS NOT REPEATING THE CHILDREN BUT POINTING TO SAME RESOURCES
 
-        F->leftChild = newLeft;
-        F->rightChild = newRight;
+        F->left = newLeft;
+        F->right = newRight;
 
-        F->leftChild = CNF(F->leftChild);
-        F->rightChild = CNF(F->rightChild);
+        F->left = CNF(F->left);
+        F->right = CNF(F->right);
     }
 
 
-    if(F->value == "+" && (F->rightChild->value == ".")){
+    if(F->value == "+" && (F->right->value == ".")){
         //Case of distribution detected on right
 
         F->value == ".";
         
         //Create new AND nodes
-        struct dataNode *newLeft = new struct dataNode;
-        struct dataNode *newRight = new struct dataNode;
+        struct formula *newLeft = new struct formula;
+        struct formula *newRight = new struct formula;
         newLeft->value = "+";
         newRight->value = "+";
 
-        newLeft->leftChild = F->rightChild->leftChild;
-        newLeft->rightChild = F->leftChild;
+        newLeft->left = F->right->left;
+        newLeft->right = F->left;
 
-        newRight->leftChild = F->rightChild->rightChild;
-        newRight->rightChild = F->leftChild; //ISNT;T THERE ISSUE HERE AS NOT REPEATING THE CHILDREN BUT POINTING TO SAME RESOURCES
+        newRight->left = F->right->right;
+        newRight->right = F->left; //ISNT;T THERE ISSUE HERE AS NOT REPEATING THE CHILDREN BUT POINTING TO SAME RESOURCES
 
-        F->leftChild = newLeft;
-        F->rightChild = newRight;
+        F->left = newLeft;
+        F->right = newRight;
 
-        F->leftChild = CNF(F->leftChild);
-        F->rightChild = CNF(F->rightChild);
+        F->left = CNF(F->left);
+        F->right = CNF(F->right);
     }
 
     return F;
@@ -418,7 +315,7 @@ dataNode* CNF(dataNode* F){
 
 
 //Now need to run CNF on it
-dataNode* NNF(dataNode* F){
+formula* NNF(formula* F){
     //Takes in a pointer to a node, returns pointer to root
     //Call helper functions for implication and negation
     //Implication Helper:
@@ -432,7 +329,7 @@ dataNode* NNF(dataNode* F){
 }
 int ill = 0;
 
-void printTree(struct dataNode* root){  
+void printTree(struct formula* root){  
 
     if (root == NULL) {
         return;
@@ -441,16 +338,16 @@ void printTree(struct dataNode* root){
     if(ill==0){
         // cout << "Now" << endl;
         ill=1;
-        // printTree(root->leftChild);
+        // printTree(root->left);
     
     }
-    // if (root->leftChild && root->rightChild) {
-    //     cout << root->leftChild->value;
-    //     cout << root->rightChild->value;
+    // if (root->left && root->right) {
+    //     cout << root->left->value;
+    //     cout << root->right->value;
     // }
-    //cout << root->leftChild->leftChild->leftChild->value;
+    //cout << root->left->left->left->value;
 
-    if((root->leftChild == NULL) && (root->rightChild == NULL)){
+    if((root->left == NULL) && (root->right == NULL)){
         // cout << "Here1";
         cout << root->value << " ";
         return;
@@ -459,14 +356,14 @@ void printTree(struct dataNode* root){
     if(root->value == "-"){
         // cout << "Here2";
         cout << root->value << " ";
-        printTree(root->leftChild);
+        printTree(root->left);
     }
 
     else{
         // cout << "Here3";
-        printTree(root->leftChild);
+        printTree(root->left);
         cout << " " << root->value << " ";
-        printTree(root->rightChild);
+        printTree(root->right);
 
     }
 
@@ -492,31 +389,31 @@ int main() {
     
     //Constructing a single subtree
         //Building a test Case
-        struct dataNode* newData1 = new dataNode;
-        struct dataNode* newData1s1 = new dataNode;
-        struct dataNode* newData1s2 = new dataNode;
-        struct dataNode* newData1s3 = new dataNode;
-        struct dataNode* newData1s4 = new dataNode;
+        struct formula* newData1 = new formula;
+        struct formula* newData1s1 = new formula;
+        struct formula* newData1s2 = new formula;
+        struct formula* newData1s3 = new formula;
+        struct formula* newData1s4 = new formula;
         
         newData1s1->value = "1";
-        newData1s1->leftChild = NULL;
-        newData1s1->rightChild = NULL;
+        newData1s1->left = NULL;
+        newData1s1->right = NULL;
         
         newData1s2->value = "2";
-        newData1s2->leftChild = NULL;
-        newData1s2->rightChild = NULL;
+        newData1s2->left = NULL;
+        newData1s2->right = NULL;
         
         newData1s3->value = "3";
-        newData1s3->leftChild = NULL;
-        newData1s3->rightChild = NULL;
+        newData1s3->left = NULL;
+        newData1s3->right = NULL;
         
         newData1s4->value = ".";
-        newData1s4->leftChild = newData1s2;
-        newData1s4->rightChild = newData1s3;
+        newData1s4->left = newData1s2;
+        newData1s4->right = newData1s3;
         
         newData1->value="<->";
-        newData1->leftChild=newData1s1;
-        newData1->rightChild=newData1s4;
+        newData1->left=newData1s1;
+        newData1->right=newData1s4;
     //End of subtree construction for one subtree
 
 
@@ -527,22 +424,22 @@ int main() {
 
     insert(newData1);
 
-    // struct dataNode* newData2 = new dataNode;
+    // struct formula* newData2 = new formula;
     // newData2->value="4";
     // insert(newData2);
 
-    // struct dataNode* newData3 = new dataNode;
+    // struct formula* newData3 = new formula;
     // newData3->value="5";
     // insert(newData3);
 
-    // struct dataNode* newData4 = new dataNode;
+    // struct formula* newData4 = new formula;
     // newData4->value="6";
     // insert(newData4);
 
 
 
 
-   cout<<"The linked list is: " <<endl;
-   display(); 
+//    cout<<"The linked list is: " <<endl;
+//    display(); 
    return 0; 
 } 
