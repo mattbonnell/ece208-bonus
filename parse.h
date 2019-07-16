@@ -1,3 +1,6 @@
+#ifndef PARSE_H
+#define PARSE_H
+
 #include <vector>
 #include <string>
 #include <fstream>
@@ -8,3 +11,4 @@
 
 
 struct formula * parse(std::string formula);
+#endif

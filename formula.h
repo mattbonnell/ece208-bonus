@@ -1,5 +1,5 @@
-#ifndef FORMULA
-#define FORMULA
+#ifndef FORMULA_H
+#define FORMULA_H
 
 #include <string>
 

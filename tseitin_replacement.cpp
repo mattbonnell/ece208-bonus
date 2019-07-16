@@ -33,14 +33,3 @@ std::list<struct formula *> * perform_tseitin_replacement(struct formula * f) {
     return sub_formulas;
 
 }
-
-int main() {
-    std::ifstream ifs("test.txt");
-    std::string formula_string((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
-    formula * f = parse(formula_string);
-    std::list<formula *> * sub_formulas = perform_tseitin_replacement(f);
-    //test point
-    delete f;
-    delete sub_formulas;
-    return 0;
-}
