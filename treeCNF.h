@@ -10,5 +10,5 @@
 
 formula *NNF(formula *F);
 formula *CNF(formula *F);
-void printTree(formula *root);
+void printTree(formula *root, std::ofstream &outfile);
 #endif
