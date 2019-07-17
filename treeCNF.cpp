@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<iostream>
 #include<string.h>
+#include <fstream>
 #include "parse.h"
 
 //#include "C:\Users\Jason\Desktop\Summer 2019 - 2B\ECE 208\ExtraCredit\project1\treeCNF.cpp"
@@ -329,7 +330,16 @@ formula* NNF(formula* F){
 }
 int ill = 0;
 
-void printTree(struct formula* root){  
+void printTree(struct formula* root, ostream &outfile){  
+
+//Write to output file
+
+
+//outfile << "Test Jason" << endl;
+
+// outfile << "a " << endl ;
+// outfile << "b " << endl;
+
 
     if (root == NULL) {
         return;
@@ -350,23 +360,28 @@ void printTree(struct formula* root){
     if((root->left == NULL) && (root->right == NULL)){
         // cout << "Here1";
         cout << root->value << " ";
+        outfile  << root->value << " ";
         return;
     }
 
     if(root->value == "-"){
         // cout << "Here2";
         cout << root->value << " ";
-        printTree(root->left);
+        outfile  << root->value << " ";
+        printTree(root->left, outfile);
     }
 
     else{
         // cout << "Here3";
-        printTree(root->left);
+        printTree(root->left, outfile);
         cout << " " << root->value << " ";
-        printTree(root->right);
+        outfile << " " << root->value << " ";
+        printTree(root->right, outfile);
 
     }
-
+    //outfile << " " << "0" << "\n";
+    //outfile << "[end_of_output]" << endl;
+    
     return;
 }
 
@@ -386,6 +401,8 @@ void printTree(struct formula* root){
 
 
 int main() { 
+
+    ofstream outfile ("outputFormula.txt");
     
     //Constructing a single subtree
         //Building a test Case
@@ -420,7 +437,9 @@ int main() {
 
     newData1 = NNF(newData1);
     newData1 = CNF(newData1);
-    printTree(newData1);
+    printTree(newData1, outfile);
+    outfile << " " << "0" << "\n";
+    
 
     insert(newData1);
 
@@ -441,5 +460,7 @@ int main() {
 
 //    cout<<"The linked list is: " <<endl;
 //    display(); 
+    outfile << "[end_of_output]" << endl;
+    outfile.close();
    return 0; 
 } 
