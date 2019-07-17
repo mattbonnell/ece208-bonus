@@ -362,16 +362,19 @@ void printTree(struct formula* root, ostream &outfile){
     if(root->value == "-"){
         // cout << "Here2";
         cout << root->value << " ";
-        outfile  << root->value << " ";
+        outfile  << root->value;
         printTree(root->left, outfile);
     }
 
     else{
-        // cout << "Here3";
-        printTree(root->left, outfile);
-        cout << " " << root->value << " ";
-        outfile << " " << root->value << " ";
-        printTree(root->right, outfile);
+        if(root->value == "+") {
+            printTree(root->left, outfile);
+            printTree(root->right, outfile);
+        } else {
+            printTree(root->left, outfile);
+            outfile << "0\n";
+            printTree(root->right, outfile);
+        }
 
     }
     //outfile << " " << "0" << "\n";
