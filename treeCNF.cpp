@@ -435,10 +435,17 @@ void printTree(struct formula* root, ostream &outfile){
 
 
 
+<<<<<<< HEAD
 //     newData1 = NNF(newData1);
 //     newData1 = CNF(newData1);
 //     printTree(newData1, outfile);
 //     outfile << " " << "0" << "\n";
+=======
+    newData1 = NNF(newData1);
+    newData1 = CNF(newData1);
+    printTree(newData1, outfile);
+    outfile << " " << "0" << "\n";
+>>>>>>> 7cd792fa2255394416bb9aa7a688ba40733988b5
     
 
 //     insert(newData1);
@@ -458,9 +465,18 @@ void printTree(struct formula* root, ostream &outfile){
 
 
 
+<<<<<<< HEAD
 // //    cout<<"The linked list is: " <<endl;
 // //    display(); 
 //     outfile << "[end_of_output]" << endl;
 //     outfile.close();
 //    return 0; 
 // } 
+=======
+//    cout<<"The linked list is: " <<endl;
+//    display(); 
+    outfile << "[end_of_output]" << endl;
+    outfile.close();
+   return 0; 
+} 
+>>>>>>> 7cd792fa2255394416bb9aa7a688ba40733988b5
