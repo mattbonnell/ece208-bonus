@@ -400,67 +400,67 @@ void printTree(struct formula* root, ostream &outfile){
 
 
 
-int main() { 
+// int main() { 
 
-    ofstream outfile ("outputFormula.txt");
+//     ofstream outfile ("outputFormula.txt");
     
-    //Constructing a single subtree
-        //Building a test Case
-        struct formula* newData1 = new formula;
-        struct formula* newData1s1 = new formula;
-        struct formula* newData1s2 = new formula;
-        struct formula* newData1s3 = new formula;
-        struct formula* newData1s4 = new formula;
+//     //Constructing a single subtree
+//         //Building a test Case
+//         struct formula* newData1 = new formula;
+//         struct formula* newData1s1 = new formula;
+//         struct formula* newData1s2 = new formula;
+//         struct formula* newData1s3 = new formula;
+//         struct formula* newData1s4 = new formula;
         
-        newData1s1->value = "1";
-        newData1s1->left = NULL;
-        newData1s1->right = NULL;
+//         newData1s1->value = "1";
+//         newData1s1->left = NULL;
+//         newData1s1->right = NULL;
         
-        newData1s2->value = "2";
-        newData1s2->left = NULL;
-        newData1s2->right = NULL;
+//         newData1s2->value = "2";
+//         newData1s2->left = NULL;
+//         newData1s2->right = NULL;
         
-        newData1s3->value = "3";
-        newData1s3->left = NULL;
-        newData1s3->right = NULL;
+//         newData1s3->value = "3";
+//         newData1s3->left = NULL;
+//         newData1s3->right = NULL;
         
-        newData1s4->value = ".";
-        newData1s4->left = newData1s2;
-        newData1s4->right = newData1s3;
+//         newData1s4->value = ".";
+//         newData1s4->left = newData1s2;
+//         newData1s4->right = newData1s3;
         
-        newData1->value="<->";
-        newData1->left=newData1s1;
-        newData1->right=newData1s4;
-    //End of subtree construction for one subtree
+//         newData1->value="<->";
+//         newData1->left=newData1s1;
+//         newData1->right=newData1s4;
+//     //End of subtree construction for one subtree
 
 
 
-    newData1 = NNF(newData1);
-    newData1 = CNF(newData1);
-    printTree(newData1, outfile);
-    outfile << " " << "0" << "\n";
+//     newData1 = NNF(newData1);
+//     newData1 = CNF(newData1);
+//     printTree(newData1, outfile);
+//     outfile << " " << "0" << "\n";
     
 
-    insert(newData1);
+//     insert(newData1);
 
-    // struct formula* newData2 = new formula;
-    // newData2->value="4";
-    // insert(newData2);
+//     // struct formula* newData2 = new formula;
+//     // newData2->value="4";
+//     // insert(newData2);
 
-    // struct formula* newData3 = new formula;
-    // newData3->value="5";
-    // insert(newData3);
+//     // struct formula* newData3 = new formula;
+//     // newData3->value="5";
+//     // insert(newData3);
 
-    // struct formula* newData4 = new formula;
-    // newData4->value="6";
-    // insert(newData4);
-
-
+//     // struct formula* newData4 = new formula;
+//     // newData4->value="6";
+//     // insert(newData4);
 
 
-//    cout<<"The linked list is: " <<endl;
-//    display(); 
-    outfile << "[end_of_output]" << endl;
-    outfile.close();
-   return 0; 
-} 
+
+
+// //    cout<<"The linked list is: " <<endl;
+// //    display(); 
+//     outfile << "[end_of_output]" << endl;
+//     outfile.close();
+//    return 0; 
+// } 
