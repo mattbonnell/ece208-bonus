@@ -337,7 +337,6 @@ void printTree(struct formula* root, ostream &outfile){
 
 
     if (root == NULL) {
-        outfile << "0\n";
         return;
     }
     // cout << "Here0";
