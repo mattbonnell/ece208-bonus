@@ -1,6 +1,7 @@
 #include "formula.h"
 #include <list>
 #include "parse.h"
+#include "treeCNF.h"
 
 
 void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct formula *> * sub_formulas) {
@@ -18,6 +19,7 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     sub->left->value = sub_var;
     sub->right = f;
     sub_formulas->push_back(sub);
+    printTree(sub)
     f->value = sub_var;
     // if (f->left) {
     //     delete f->left;
