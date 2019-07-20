@@ -50,11 +50,11 @@ struct formula * parse(std::string formula) {
     if (orIndex != -1) {
         f->value = "+";
         f->left = parse(formula.substr(0, orIndex - 2));
-        f->right = parse(formula.substr(orIndex + 2, formula.npos));
+        f->right = parse(formula.substr(orIndex + 1, formula.npos));
     } else if (andIndex != -1) {
         f->value = ".";
         f->left = parse(formula.substr(0, andIndex - 2));
-        f->right = parse(formula.substr(andIndex + 2, formula.npos));
+        f->right = parse(formula.substr(andIndex + 1, formula.npos));
     } else if (isLiteral) {
         int int_value = std::stoi(value);
         if (int_value < 0) {
