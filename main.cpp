@@ -13,7 +13,8 @@ int main() {
 
         formula *converted = NNF(*it);
         converted = CNF(converted);
-        printTree(converted, outfile);
+        // printTree(converted, outfile);
+        printTree(*it, outfile);
         outfile << "0\n";
     }
     //test point
