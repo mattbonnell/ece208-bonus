@@ -3,6 +3,7 @@
 #include "parse.h"
 #include "treeCNF.h"
 
+std::ofstream outfile("outputFormula.txt");
 
 void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct formula *> * sub_formulas) {
     if (f->value == "+" || f->value == ".") {
@@ -19,7 +20,7 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     sub->left->value = sub_var;
     sub->right = f;
     sub_formulas->push_back(sub);
-    printTree(sub);
+    printTree(sub, outfile);
     f->value = sub_var;
     // if (f->left) {
     //     delete f->left;
