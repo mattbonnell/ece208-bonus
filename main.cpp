@@ -11,8 +11,8 @@ int main() {
     std::ofstream outfile("outputFormula.txt");
     for(std::list<formula *>::iterator it = sub_formulas->begin(); it != sub_formulas->end(); ++it) {
 
-        formula *converted = NNF(*it);
-        converted = CNF(converted);
+        // formula *converted = NNF(*it);
+        // converted = CNF(converted);
         // printTree(converted, outfile);
         printTree(*it, outfile);
         outfile << "0\n";
