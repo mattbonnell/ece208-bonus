@@ -9,5 +9,5 @@ struct formula {
     formula * right;
 };
 
-void copy_formula(formula *&dest, formula *src)
+void copy_formula(formula *&dest, formula *src);
 #endif
