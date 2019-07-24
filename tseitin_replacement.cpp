@@ -18,6 +18,7 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     if (f->value == "+" || f->value == ".") {
         _perform_tseitin_replacement_recursive(f->left, sub_formulas);
         _perform_tseitin_replacement_recursive(f->right, sub_formulas);
+        return;
 
     } else if (f->value != "-") {
         return;
