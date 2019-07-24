@@ -26,8 +26,10 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     struct formula * sub = new struct formula;
     std::string sub_var = "p" + std::to_string(sub_formulas->size());
     sub->value = "<->";
-    sub->left = new struct formula;
+    sub->left = new formula;
     sub->left->value = sub_var;
+    sub->left->left = NULL;
+    sub->left->right = NULL;
     // Copy f effectively
     formula *f_copy;
     copy_tree(f_copy, f);
