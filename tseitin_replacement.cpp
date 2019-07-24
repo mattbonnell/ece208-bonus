@@ -3,7 +3,7 @@
 #include "parse.h"
 #include "treeCNF.h"
 
-void copy_tree(formula *dest, formula *src) {
+void copy_tree(formula *&dest, formula *src) {
     if (!src) {
         return;
     }
@@ -28,7 +28,7 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     sub->left = new struct formula;
     sub->left->value = sub_var;
     // Copy f effectively
-    formula * f_copy;
+    formula *f_copy;
     copy_tree(f_copy, f);
     sub->right = f_copy;
     sub_formulas->push_back(sub);
