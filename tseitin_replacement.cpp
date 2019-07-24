@@ -3,6 +3,16 @@
 #include "parse.h"
 #include "treeCNF.h"
 
+void copy_tree(formula *dest, formula *src) {
+    if (!src) {
+        return;
+    }
+    dest = new formula;
+    dest->value = src->value;
+    copy_tree(dest->left, src->left);
+    copy_tree(dest->right, src->right);
+}
+
 
 void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct formula *> * sub_formulas) {
     if (f->value == "+" || f->value == ".") {
@@ -17,7 +27,10 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     sub->value = "<->";
     sub->left = new struct formula;
     sub->left->value = sub_var;
-    sub->right = f;
+    // Copy f effectively
+    formula * f_copy;
+    copy_tree(f_copy, f);
+    sub->right = f_copy;
     sub_formulas->push_back(sub);
     f->value = sub_var;
     if (f->left) {
