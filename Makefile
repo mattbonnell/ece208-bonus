@@ -1,6 +1,6 @@
 
 main:
-	g++ -g main.cpp parse.cpp treeCNF.cpp tseitin_replacement.cpp -o main
+	g++ -g main.cpp parse.cpp treeCNF.cpp tseitin_replacement.cpp formula.cpp -o main
 
 parse:
 	g++ -g parse.cpp -o parse
