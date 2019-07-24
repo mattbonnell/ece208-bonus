@@ -135,7 +135,7 @@ formula* impHelper(formula* F){
         copy(newLeft->right, F->right);
         newRight->left = rightNeg;
         // newRight->right = F->left;
-        copy(newRight->right, F->left)
+        copy(newRight->right, F->left);
 
         //Assign parent node to new ORs
         F->left = newLeft;
