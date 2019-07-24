@@ -20,9 +20,12 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     sub->right = f;
     sub_formulas->push_back(sub);
     f->value = sub_var;
-    // if (f->left) {
-    //     delete f->left;
-    // }
+    if (f->left) {
+        delete f->left;
+    }
+    if (f->right) {
+        delete f->right;
+    }
     f->left = NULL;
     f->right = NULL;
     return;
