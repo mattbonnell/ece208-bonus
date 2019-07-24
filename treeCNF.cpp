@@ -101,6 +101,7 @@ formula* impHelper(formula* F){
         F->left = newLeft; //Set F left to be negation, with everything else following, right is unchanged
         F->left = impHelper(F->left);
         F->right = impHelper(F->right);
+        return F;
     }
 
     if(F->value == "<->"){
@@ -139,6 +140,7 @@ formula* impHelper(formula* F){
         //Recursive simplification on children
         F->left = impHelper(F->left);
         F->right = impHelper(F->right);
+        return F;
     }
 
     if(F->value == "."){
@@ -146,6 +148,7 @@ formula* impHelper(formula* F){
 
         F->right = impHelper(F->right);
         F->left = impHelper(F->left);
+        return F;
     }
 
     if(F->value == "+"){
@@ -153,6 +156,7 @@ formula* impHelper(formula* F){
 
         F->right = impHelper(F->right);
         F->left = impHelper(F->left);
+        return F;
     }
 
     //Now need case for double negation, and a separate case for negation yet not a double negation
@@ -166,12 +170,14 @@ formula* impHelper(formula* F){
         F = point;
 
         F = impHelper(F);
+        return F;
     }
 
     if(F->value == "-" && (F->left->value != "-")){
         //Encoding for single negation
 
         F->left = impHelper(F->left);
+        return F;
     }
 
     return F;
@@ -202,6 +208,7 @@ formula* negHelper(formula* F){
 
         F->left = negHelper(F->left);
         F->right = negHelper(F->right);
+        return F;
     }
 
     if (F->value == "-" && (F->left->value == "+")){
@@ -221,6 +228,7 @@ formula* negHelper(formula* F){
 
         F->left = negHelper(F->left);
         F->right = negHelper(F->right);
+        return F;
     }
 
     if(F->value == "-" && (F->left->value == "-")){
@@ -234,10 +242,12 @@ formula* negHelper(formula* F){
         F = point;
 
         F = negHelper(F);
+        return F;
     }
 
     if(F->value == "-" && (F->left->value != "-")){
         F->left = negHelper(F->left);
+        return F;
     }
 
     if(F->value == "." || F->value == "+"){
@@ -245,6 +255,7 @@ formula* negHelper(formula* F){
 
         F->left = negHelper(F->left);
         F->right = negHelper(F->right);
+        return F;
     }
 
     return F;
@@ -279,6 +290,7 @@ formula* CNF(formula* F){
 
         F->left = CNF(F->left);
         F->right = CNF(F->right);
+        return F;
     }
 
 
@@ -304,6 +316,7 @@ formula* CNF(formula* F){
 
         F->left = CNF(F->left);
         F->right = CNF(F->right);
+        return F;
     }
 
     return F;
