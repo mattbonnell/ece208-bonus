@@ -21,7 +21,7 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
     sub->left->right = NULL;
     // Copy f effectively
     formula *f_copy;
-    copy(f_copy, f);
+    copy_formula(f_copy, f);
     sub->right = f_copy;
     sub_formulas->push_back(sub);
     f->value = sub_var;

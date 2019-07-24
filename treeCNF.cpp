@@ -123,19 +123,19 @@ formula* impHelper(formula* F){
 
         //Assign negation children
         // leftNeg->left = F->left;
-        copy(leftNeg->left, F->left);
+        copy_formula(leftNeg->left, F->left);
         leftNeg->right = NULL;
         // rightNeg->left = F->right;
-        copy(rightNeg->left, F->right);
+        copy_formula(rightNeg->left, F->right);
         rightNeg->right = NULL;
 
         //Assign ORs connected with new negations
         newLeft->left = leftNeg;
         // newLeft->right = F->right;
-        copy(newLeft->right, F->right);
+        copy_formula(newLeft->right, F->right);
         newRight->left = rightNeg;
         // newRight->right = F->left;
-        copy(newRight->right, F->left);
+        copy_formula(newRight->right, F->left);
 
         //Assign parent node to new ORs
         F->left = newLeft;
