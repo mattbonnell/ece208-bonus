@@ -1,0 +1,7 @@
+a d 0
+a z 0
+b c 0
+c 0
+c d 0
+c e 0
+y x 0
