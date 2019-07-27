@@ -95,17 +95,31 @@ int main()
     cout << "Couldn't open the file" << "\n";
     return -1;
   }
+  int count = 0;
   while(getline(file,clause)){
     istringstream is(clause);
     
+    if(clause[0]=='c'){
+      continue;
+    }
     
     int j;
+    char c;
+    count++;
     vector<int> clause;
     while (is >> j) {
-      clause.push_back(j);
+      
+        clause.push_back(j);
+      
+      
     }
 
     inStream.push_back(clause);
+  }
+
+  if(count==0){
+    printf("No CNF data input\n");
+    return 0;
   }
 
   //CLOSE THE FILE!!!!!
