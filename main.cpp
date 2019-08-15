@@ -7,7 +7,9 @@ int main() {
     std::ifstream ifs("test.txt");
     std::string formula_string((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
     formula *f = parse(formula_string);
+    std::cout << "here" << std::endl;
     std::list<formula *> *sub_formulas = perform_tseitin_replacement(f);
+    std::cout << "there" << std::endl;
     std::ofstream outfile("outputFormula.txt");
     for(std::list<formula *>::iterator it = sub_formulas->begin(); it != sub_formulas->end(); ++it) {
 
