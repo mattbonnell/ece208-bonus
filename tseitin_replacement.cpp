@@ -13,7 +13,7 @@ void _perform_tseitin_replacement_recursive(struct formula * f, std::list<struct
         return;
     }
     struct formula * sub = new struct formula;
-    std::string sub_var = "999" + std::to_string(sub_formulas->size());
+    std::string sub_var = "9" + std::to_string(sub_formulas->size());
     sub->value = "<->";
     sub->left = new formula;
     sub->left->value = sub_var;
