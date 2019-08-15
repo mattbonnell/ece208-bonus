@@ -122,20 +122,20 @@ formula* impHelper(formula* F){
         rightNeg->value = "-";
 
         //Assign negation children
-        leftNeg->left = F->left;
-        //copy_formula(leftNeg->left, F->left);
+        // leftNeg->left = F->left;
+        copy_formula(leftNeg->left, F->left);
         leftNeg->right = NULL;
-        rightNeg->left = F->right;
-        //copy_formula(rightNeg->left, F->right);
+        // rightNeg->left = F->right;
+        copy_formula(rightNeg->left, F->right);
         rightNeg->right = NULL;
 
         //Assign ORs connected with new negations
         newLeft->left = leftNeg;
-        newLeft->right = F->right;
-        //copy_formula(newLeft->right, F->right);
+        // newLeft->right = F->right;
+        copy_formula(newLeft->right, F->right);
         newRight->left = rightNeg;
-        newRight->right = F->left;
-        //copy_formula(newRight->right, F->left);
+        // newRight->right = F->left;
+        copy_formula(newRight->right, F->left);
 
         //Assign parent node to new ORs
         F->left = newLeft;
@@ -202,12 +202,12 @@ formula* negHelper(formula* F){
         struct formula *leftNeg = new struct formula;
         struct formula *rightNeg = new struct formula;
 
-        leftNeg->left = F->left->left;
-        //copy_formula(leftNeg->left, F->left->left);
+        // leftNeg->left = F->left->left;
+        copy_formula(leftNeg->left, F->left->left);
         leftNeg->right = NULL; //Since neg node
         rightNeg->right = NULL;
-        rightNeg->left = F->left->right;
-       // copy_formula(rightNeg->left, F->left->right);
+        // rightNeg->left = F->left->right;
+        copy_formula(rightNeg->left, F->left->right);
 
         F->left = leftNeg;
         F->right = rightNeg;
@@ -224,10 +224,10 @@ formula* negHelper(formula* F){
         struct formula *leftNeg = new struct formula;
         struct formula *rightNeg = new struct formula;
 
-        leftNeg->left = F->left->left;
-       // copy_formula(leftNeg->left, F->left->left);
-        rightNeg->left = F->left->right;
-       // copy_formula(rightNeg->left, F->left->right);
+        // leftNeg->left = F->left->left;
+        copy_formula(leftNeg->left, F->left->left);
+        // rightNeg->left = F->left->right;
+        copy_formula(rightNeg->left, F->left->right);
         leftNeg->right = NULL;
         rightNeg->right = NULL;
 
@@ -285,15 +285,15 @@ formula* CNF(formula* F){
         struct formula *newLeft = new struct formula;
         struct formula *newRight = new struct formula;
 
-         newLeft->left = F->left->left;
-        //copy_formula(newLeft->left, F->left->left);
-        newLeft->right = F->right;
-        //copy_formula(newLeft->right, F->right);
+        // newLeft->left = F->left->left;
+        copy_formula(newLeft->left, F->left->left);
+        // newLeft->right = F->right;
+        copy_formula(newLeft->right, F->right);
         newLeft->value = "+";
         newRight->value = "+";
 
-        newRight->left = F->left->right;
-        //copy_formula(newRight->left, F->left->right);
+        // newRight->left = F->left->right;
+        copy_formula(newRight->left, F->left->right);
         newRight->right = F->right; //ISNT;T THERE ISSUE HERE AS NOT REPEATING THE CHILDREN BUT POINTING TO SAME RESOURCES
 
         F->left = newLeft;
@@ -316,14 +316,14 @@ formula* CNF(formula* F){
         newLeft->value = "+";
         newRight->value = "+";
 
-        newLeft->left = F->right->left;
-        //copy_formula(newLeft->left, F->right->left);
-        newLeft->right = F->left;
-        //copy_formula(newLeft->right, F->left);
+        // newLeft->left = F->right->left;
+        copy_formula(newLeft->left, F->right->left);
+        // newLeft->right = F->left;
+        copy_formula(newLeft->right, F->left);
 
-        newRight->left = F->right->right;
-        //copy_formula(newRight->left, F->right->right);
-        newRight->right = F->left; //ISNT;T THERE ISSUE HERE AS NOT REPEATING THE CHILDREN BUT POINTING TO SAME RESOURCES
+        // newRight->left = F->right->right;
+        copy_formula(newRight->left, F->right->right);
+        // newRight->right = F->left; //ISNT;T THERE ISSUE HERE AS NOT REPEATING THE CHILDREN BUT POINTING TO SAME RESOURCES
 
         F->left = newLeft;                                                                              
         F->right = newRight;

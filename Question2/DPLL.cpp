@@ -1,152 +1,144 @@
 #include <iostream>
 #include <fstream>
-#include <vector>
-#include <algorithm>
 #include <string>
 #include <sstream>
-
+#include <vector>
+#include <algorithm>
 using namespace std;
-//Completed August 15th check 12:31:32 PM
 
-enum STATE{sat, unsat, contingent};
-enum STATE BCP(vector<vector<int>>& F, int prop);
+//Use of ENUM FOR THE BCP STATUS
+enum bcpState{sat, unsat, cont};
+
+bool in_vector ( vector<int> vecIn, int item ) {
+
+  //Input vector generated - for internal use only!!
+
+  vector<int>::iterator iter;
+
+  iter = find(vecIn.begin(), vecIn.end(), item);
+
+  //If at the end then input vector triv. case return false - bottom out
+  if(iter == vecIn.end()) return false;
 
 
-bool iterate (vector<int> vec, int item){
-  //As follow from simple example, simply iterates over a vector and determines if item is inside it
-  vector<int>::iterator trav;
-
-  trav = find(vec.begin(),vec.end(), item);
-
-  if(trav==vec.end()){
-    return false;
-  }
-  else{
-    return true;
-  }
+  return true;
 }
 
-//Unit Resolution - to Be Performed 
-//Follow Prof. Ganesh's slides from lecture on this very closely!!!!
-void unitResolution(vector<vector<int>>& F){
-  for (int i = 0; i < F.size(); i++) {
-    if (F[i].size() != 1){
-      //No Unit Resolution Possible for this clause obviously!
-      break;
+void UR( vector< vector<int> >& inStream ){
+  //Logical Complexity - perform unit resolution as described in the notes for lecture
+
+  for ( int i = 0; i < inStream.size(); i++ ) {
+    //iterate over inStream size
+
+    if ( inStream[i].size() != 1 ) break;
+    bool flag = false; //Flag for unit resolution - if it is possible to remove the 'complementor' of the unit resolution process
+
+    for( int j = 0; j < inStream.size(); j++ ){
+      if(inStream[j].size() <= 1 || !in_vector(inStream[j], -inStream[i][0]) ) break;
+      inStream[j].erase(find(inStream[j].begin(), inStream[j].end(), -inStream[i][0]));
+      flag = true;
     }
-    bool mark = false;
-    //Iterate over the formula now and look for prop var and its negation within outer forloop
-    for(int j = 0; j < F.size(); j++){
-      if(F[j].size() <= 1 || !iterate(F[j], -F[i][0])){
-        break;
-      }
-      //Erase the prop var and clause with single unit if applicable (no break) and set mark to true
-      F[j].erase(find(F[j].begin(), F[j].end(), -F[i][0]));
-      mark = true;
-    }
-    if (mark){
-      //Clause Erasor
-      F.erase(F.begin() + i);
+
+    if (flag){
+      inStream.erase(inStream.begin() + i);
       i--;
     }
   }
 }
 
-bool DPLL(vector<vector<int>> formula, int A) {
-  //Follow from Slide - basic DPLL execution of algorithm
-  // A - variable assignment
-  //INput to BCP, get the output
-  enum STATE res = BCP(formula, A);
-  if (res == sat){
-    return true;
-  }
-  else if (res == unsat) {
-  return false;
-  }
-  //Call DPLL on both variable true and its negation, false as indicated by prop. variable value as either + or - below
-  return DPLL(formula, formula[0][0]) || DPLL(formula, -formula[0][0]);
-}
+enum bcpState BCP(vector< vector<int>>& inStr, int decVar ) {
+//Logical Complexity - Performs BCP Operations - Must Refer to Notes from Prof. Ganesh to examine procedure for BCP
+//CONFIRM - NOT ENTIRELY SURE, BUT LOGIC DOES WORK??
+  vector<vector<int>> copy = inStr;
 
-// BCP Algorithm - More Complicated !!!
-enum STATE BCP(vector<vector<int>>& F, int prop) {
-  //Create a soft-copy of formula passed by adress to iterate over and perform contraint propgation
-  vector<vector<int>> sF = F;
-  for (int j=0; j<sF.size(); j++){
-    //Iterating over the input formula clauses given a propositional variable, if it exists in both forms, erase it from its index
-    if (iterate(sF[j], prop)) {
-      //Erase macro
-      sF.erase(sF.begin() + j);
-      j--;
+  for ( int i = 0; i < copy.size(); i++ ) {
+    if (in_vector(copy[i], decVar) && copy[i].size() > 1) {
+      copy.erase(copy.begin() + i);
+      //Decrement and continue
+      i=i-1;
     }
-    //Check now in other case if negation of propositional var resent
-    else if(iterate(sF[j], -prop) && sF[j].size() > 1) {
-      //Erase occurences of the negation of the propositional variable within the bounds of the input clause
-      sF[j].erase(find(sF[j].begin(), sF[j].end(), -prop));
+    else if(in_vector(copy[i], -decVar) && copy[i].size() > 1) {
+      copy[i].erase(find(copy[i].begin(), copy[i].end(), -decVar));
     }
-    else if(iterate(sF[j], -prop)) {
-      //If iterated over and no found, then unsat return
+    else if(in_vector(copy[i], -decVar)) {
       return unsat;
     }
   }
-
-  //After changes made perform unit resolution on soft copy formula and of course, assign original formula to softcopy
-  unitResolution(sF);
-  F = sF;
-  if (sF.size()==0){ 
-    //triv case if simplified all vars out
+  //Now, perform UR on resulting local val
+  UR(copy);
+  if (copy.size()==0){
     return sat;
   }
-
-  return contingent;
+  inStr = copy;
+  return cont;
 }
 
-int main(int argc, char* argv[]){
-  //Generate a vector of vectored ints for the formula internal representation
-  //Generate input string below from the cnf file for our use
-  vector<vector<int>> F;
-  string inString;
+bool DPLL(vector<vector<int>> inStr, int dec) {
+  //Simple DPLL application integration from slides from Prof. Ganesh notes
+  enum bcpState res = BCP(inStr, dec);
+  if (res == sat){
+    return true;
+  }
+  else if(res == unsat){
+    return false;
+  }
+  return DPLL(inStr, inStr[0][0]) || DPLL(inStr, -inStr[0][0]);
+}
 
-  //Standard ifstream which will bve used to create a stringstream????
-  //DOES BELOW WORK - - - - - NEED TO TEST??????????????????????
-  ifstream file(argv[1]);
+int main()
+{
+  string clause;
+  vector<vector<int>> inStream;
 
-  if(!file.is_open()){
-    cout << "Error In Opening File. Please check your input a try again.";
-    fprintf(stderr, "Error in Opening File");
+  ifstream file("Input.txt");
+  if( !file.is_open() ){
+    cout << "Couldn't open the file" << "\n";
     return -1;
   }
-
-  //Process of Parsing the Input String and populating formula for our internal use below
-  while(getline(file,inString)){
-
-    //Get Input String Stream 
-    istringstream streamIn(inString);
-    int valid;
-
-    //Vector for the line delimited clause in the CNF input format file
-    vector<int> clause;
-
-    //Get next character in input sequence - first time use 
-    char var=streamIn.peek();
-
-    if(var== 'c' || var=='p'){
-      //CNF file comment -
+  int count = 0;
+  while(getline(file,clause)){
+    istringstream is(clause);
+    
+    if(clause[0]=='c'){
       continue;
     }
-
-    while (streamIn >> valid && valid != 0) {
-      clause.push_back(valid);
+    
+    int j;
+    char c;
+    count++;
+    vector<int> clause;
+    while (is >> j) {
+      
+        clause.push_back(j);
+      
+      
     }
 
-    F.push_back(clause);
+    inStream.push_back(clause);
   }
+
+  if(count==0){
+    printf("No CNF data input\n");
+    return 0;
+  }
+
+  //CLOSE THE FILE!!!!!
   file.close();
 
-  //Launch the DPLL algorithm from here on both prop var initial and its negation assignment recursively
-  bool ret = DPLL(F, F[0][0]) || DPLL(F, -F[0][0]);
-  string result = (ret) ? "SAT" : "UNSAT";
 
-  cout << "The formula, as determined by this SAT Solver is: " << result << endl;
+
+/*
+What you need to do MATT is write the code to properly parse the lines as specified in the assignment documentation, for DIMACs form
+This is based on the DIMACs format, but read the specs on Learn
+
+The input format is similar to Input.txt example, but would have 0s at end of every line, and so the code needs to be updated for this
+
+
+
+ */
+  bool ret = DPLL(inStream, inStream[0][0]) || DPLL(inStream, -inStream[0][0]) ;
+  string ret_val = (ret) ? "SAT" : "UNSAT";
+  cout << "Input formula is: " << ret_val << endl;
 
   return 0;
 }
