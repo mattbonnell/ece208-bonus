@@ -115,41 +115,48 @@ formula* impHelper(formula* F){
         newLeft->value = ".";
         newRight->value = ".";
 
-        copy_formula(newLeft->left, F->left);
-        copy_formula(newLeft->right, F->right);
-
-        newRight->left = new struct formula;
-        newRight->left->value = "-";
-        copy_formula(newRight->left->left, F->left);
-        newRight->left->right = NULL;
-
-        newRight->right = new struct formula;
-        newRight->right->value = "-";
-        copy_formula(newRight->right->left, F->right);
-        newRight->right->right = NULL;
-
-        // //New Negation nodes
-        // struct formula *leftNeg = new struct formula;
-        // struct formula *rightNeg = new struct formula;
-        // leftNeg->value = "-";
-        // rightNeg->value = "-";
-
-        // //Assign negation children
-        // // leftNeg->left = F->left;
-        // copy_formula(leftNeg->left, F->left);
-        // leftNeg->right = NULL;
-        // // rightNeg->left = F->right;
-        // copy_formula(rightNeg->left, F->right);
-        // rightNeg->right = NULL;
-
-        // //Assign ORs connected with new negations
-        // newLeft->left = leftNeg;
-        // // newLeft->right = F->right;
+        // copy_formula(newLeft->left, F->left);
         // copy_formula(newLeft->right, F->right);
+
+        // newRight->left = new struct formula;
+        // newRight->left->value = "-";
+        // copy_formula(newRight->left->left, F->left);
+        // newRight->left->right = NULL;
+
+        // newRight->right = new struct formula;
+        // newRight->right->value = "-";
+        // copy_formula(newRight->right->left, F->right);
+        // newRight->right->right = NULL;
+
+        //New Negation nodes
+        struct formula *leftNeg = new struct formula;
+        struct formula *rightNeg = new struct formula;
+        leftNeg->value = "-";
+        rightNeg->value = "-";
+
+        //Assign negation children
+        // leftNeg->left = F->left;
+        copy_formula(leftNeg->left, F->left);
+        leftNeg->right = NULL;
+        // rightNeg->left = F->right;
+        copy_formula(rightNeg->left, F->right);
+        rightNeg->right = NULL;
+
+        //Assign ORs connected with new negations
+        newLeft->left = leftNeg;
+        // newLeft->right = F->right;
+
+
+        //copy_formula(newLeft->right, F->right);
         
-        // newRight->left = rightNeg;
-        // // newRight->right = F->left;
-        // copy_formula(newRight->right, F->left);
+        newLeft->right = rightNeg;
+        // newRight->right = F->left;
+
+        
+        //copy_formula(newRight->right, F->left);
+
+        newRight->left=F->left;
+        newRight->right=F->right;
 
         //Assign parent node to new ORs
         F->left = newLeft;
