@@ -107,26 +107,13 @@ formula* impHelper(formula* F){
     if(F->value == "<->"){
         //Encoding of bidirectional case
         
-        F->value = "+"; //Set value to an AND
+        F->value = "."; //Set value to an AND
         
         //New OR Nodes
         struct formula *newLeft = new struct formula;
         struct formula *newRight = new struct formula;
-        newLeft->value = ".";
-        newRight->value = ".";
-
-        // copy_formula(newLeft->left, F->left);
-        // copy_formula(newLeft->right, F->right);
-
-        // newRight->left = new struct formula;
-        // newRight->left->value = "-";
-        // copy_formula(newRight->left->left, F->left);
-        // newRight->left->right = NULL;
-
-        // newRight->right = new struct formula;
-        // newRight->right->value = "-";
-        // copy_formula(newRight->right->left, F->right);
-        // newRight->right->right = NULL;
+        newLeft->value = "+";
+        newRight->value = "+";
 
         //New Negation nodes
         struct formula *leftNeg = new struct formula;
@@ -145,18 +132,10 @@ formula* impHelper(formula* F){
         //Assign ORs connected with new negations
         newLeft->left = leftNeg;
         // newLeft->right = F->right;
-
-
         copy_formula(newLeft->right, F->right);
-        
-        newLeft->right = rightNeg;
+        newRight->left = rightNeg;
         // newRight->right = F->left;
-
-        
         copy_formula(newRight->right, F->left);
-
-        newRight->left=F->left;
-        newRight->right=F->right;
 
         //Assign parent node to new ORs
         F->left = newLeft;
