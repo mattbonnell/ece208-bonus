@@ -10,6 +10,7 @@ int main() {
     std::list<formula *> *sub_formulas = perform_tseitin_replacement(f);
     std::ofstream outfile("outputFormula.txt");
     for(std::list<formula *>::iterator it = sub_formulas->begin(); it != sub_formulas->end(); ++it) {
+        std::cout << "bump" << std::endl;
         printTree((formula *)*it, outfile);
         std::cout << "here" << std::endl;
         formula *converted = NNF((formula *)*it);
