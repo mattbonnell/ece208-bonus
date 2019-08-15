@@ -12,8 +12,8 @@ int main() {
     for(std::list<formula *>::iterator it = sub_formulas->begin(); it != sub_formulas->end(); ++it) {
         std::cout << "here" << std::endl;
         formula *converted = NNF((formula *)*it);
-        converted = CNF(converted);
         std::cout << "there" << std::endl;
+        converted = CNF(converted);
         printTree(converted, outfile);
         outfile << "0\n";
     }
