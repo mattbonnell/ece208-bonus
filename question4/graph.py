@@ -16,16 +16,36 @@ class Graph(object):
         self.__graph_dict = graph_dict
 
 
-    def write_vertex_cover_cnf(self, filename):
-        with open(filename, 'w') as output_file:
+    def vertex_cover_cnf(self, graph_dict=None, k=None, filename=None):
+        result = []
+        if graph_dict:
+            graph = Graph(graph_dict=graph_dict)
+            edges = graph.edges()
+        else:
             edges = self.edges()
-            for edge in edges:
+            while edges:
+                edge = edges.pop()
+                result.append(edge)
                 edge_list = list(edge)
                 first = edge_list[0]
                 second = ""
                 if len(edge_list) == 2:
-                    second += " " + edge_list[1]
-                output_file.write(f"{first}{second} 0\n")
+                    second = edge_list[1]
+                edges = [edge for edge in edges if not (first in edge or second in edge)]
+        if k is not None and len(result) > k:
+            print(f"Unable to find vertex cover of size at most {k}")
+            return None
+        if filename is not None:
+            with open(filename, 'w') as output_file:
+                for edge in result:
+                    edge_list = list(edge)
+                    first = edge_list[0]
+                    if len(edge_list) == 2:
+                        second = edge_list[1]
+                        output_file.write(f"{first} {second} 0\n")
+                    else:
+                        output_file.write(f"{first} 0\n")
+        return result
 
 
 
@@ -87,39 +107,12 @@ if __name__ == "__main__":
           "c" : ["b", "c", "d", "e"],
           "d" : ["a", "c"],
           "e" : ["c"],
-          "f" : []
+          "f" : ["d"]
         }
 
 
     graph = Graph(g)
 
-    print("Vertices of graph:")
-    print(graph.vertices())
-
-    print("Edges of graph:")
-    print(graph.edges())
-
-    print("Add vertex:")
-    graph.add_vertex("z")
-
-    print("Vertices of graph:")
-    print(graph.vertices())
- 
-    print("Add an edge:")
-    graph.add_edge({"a","z"})
-    
-    print("Vertices of graph:")
-    print(graph.vertices())
-
-    print("Edges of graph:")
-    print(graph.edges())
-
-    print('Adding an edge {"x","y"} with new vertices:')
-    graph.add_edge({"x","y"})
-    print("Vertices of graph:")
-    print(graph.vertices())
-    print("Edges of graph:")
-    print(graph.edges())
-
-    graph.write_vertex_cover_cnf('output.txt')
+    print("Computing minimal vertex cover")
+    print(graph.vertex_cover_cnf(k=5, filename="output.cnf"))
   
