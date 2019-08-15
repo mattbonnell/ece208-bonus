@@ -16,6 +16,7 @@ int main() {
         formula *converted = NNF((formula *)*it);
         std::cout << "there" << std::endl;
         converted = CNF(converted);
+        std::cout << "last" << std::endl;
         printTree(converted, outfile);
         outfile << "0\n";
     }
