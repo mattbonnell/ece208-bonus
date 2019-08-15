@@ -147,13 +147,13 @@ formula* impHelper(formula* F){
         // newLeft->right = F->right;
 
 
-        //copy_formula(newLeft->right, F->right);
+        copy_formula(newLeft->right, F->right);
         
         newLeft->right = rightNeg;
         // newRight->right = F->left;
 
         
-        //copy_formula(newRight->right, F->left);
+        copy_formula(newRight->right, F->left);
 
         newRight->left=F->left;
         newRight->right=F->right;
